@@ -7,7 +7,7 @@ RUN echo "Set disable_coredump false" >> /etc/sudo.conf
 RUN apt-get update -q && \
     apt-get upgrade -yq && \
     apt-get install -yq keyboard-configuration && \
-    apt-get install -yq wget curl openssh-client git build-essential vim sudo lsb-release locales bash-completion tzdata gosu && \
+    apt-get install -yq wget curl openssh-client git build-essential vim sudo lsb-release locales bash-completion tzdata gosu openjdk-8-jdk-headless && \
     rm -rf /var/lib/apt/lists/*
 RUN useradd --create-home --home-dir /home/ubuntu --shell /bin/bash --user-group --groups adm,sudo ubuntu && \
     echo ubuntu:ubuntu | chpasswd && \
@@ -20,16 +20,17 @@ RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN mkdir /home/ubuntu/docker_ws && \
     cd /home/ubuntu/docker_ws
 RUN --mount=type=ssh git clone --recurse-submodules git@github.com:uga-robotics/AutonomousHexacopter.git /home/ubuntu/docker_ws/src/AutonomousHexacopter
-RUN cd /home/ubuntu/docker_ws/src/AutonomousHexacopter/PX4-Autopilot && git checkout uga-dev && \
-    cd ../px4_msgs && git checkout a635d9d827ac36a51411e03b9b8eb25a599dc734 && \
-    cd ../px4_ros_com && git checkout uga-dev && cd ../ && \
-    gosu ubuntu ./scripts/install_deps.sh && \
-    gosu ubuntu ./scripts/rtps_install.sh && \
-    gosu ubuntu curl -sSL http://get.gazebosim.org | sh
-RUN export DISPLAY=127.0.0.1:0.0
 USER ubuntu
 WORKDIR /home/ubuntu
 ENV HOME=/home/ubuntu
+RUN sudo chmod -R 777 /home/ubuntu/docker_ws && \
+    cd /home/ubuntu/docker_ws/src/AutonomousHexacopter/PX4-Autopilot && git checkout uga-dev && \
+    cd ../px4_msgs && git checkout a635d9d827ac36a51411e03b9b8eb25a599dc734 && \
+    cd ../px4_ros_com && git checkout uga-dev && cd ../ && \
+    ./scripts/install_deps.sh && \
+    ./scripts/rtps_install.sh && \
+    curl -sSL http://get.gazebosim.org | sh
+RUN export DISPLAY=127.0.0.1:0.0
 ENV ROSDISTRO=foxy
 ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 CMD ["bash"]
