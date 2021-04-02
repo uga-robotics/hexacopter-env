@@ -32,7 +32,7 @@ then
    echo
    usage
    exit
-elif [ -z "$path" ]
+elif [ -z "$id" ]
 then
    echo "Insufficient Arguments: missing 'ID' option"
    echo
