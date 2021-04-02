@@ -1,6 +1,6 @@
 # hexacopter-env
 
-Dockerfile to setup a ROS2 Foxy Linux environment for working on the AutonomousHexacopter project. Prebuilt images available at: [TODO]
+Dockerfile to setup a ROS2 Foxy Linux environment for working on the AutonomousHexacopter project. Prebuilt images available on the [UGA Robotics Docker Hub](https://hub.docker.com/orgs/ugarobotics) page.
 
 ## Prerequisites
 
