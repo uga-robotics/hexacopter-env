@@ -3,6 +3,7 @@
 FROM ubuntu:20.04
 LABEL maintainer="Kevin Koffroth <ktkoffroth@gmail.com>"
 ENV DEBIAN_FRONTEND=noninteractive
+ADD scripts /tmp
 RUN echo "Set disable_coredump false" >> /etc/sudo.conf && \
     apt-get update -q && \
     apt-get upgrade -yq && \
@@ -13,24 +14,16 @@ RUN echo "Set disable_coredump false" >> /etc/sudo.conf && \
     echo ubuntu:ubuntu | chpasswd && \
     echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     locale-gen en_US.UTF-8&& \
-    git clone https://github.com/Tiryoh/ros2_setup_scripts_ubuntu.git /tmp/ros2_setup_scripts_ubuntu && \
-    gosu ubuntu /tmp/ros2_setup_scripts_ubuntu/ros2-foxy-desktop-main.sh && \
+    /tmp/ros2-foxy-desktop-main.sh && \
     rm -rf /var/lib/apt/lists/* && \
-    mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts && \
-    mkdir /home/ubuntu/docker_ws && \
-    cd /home/ubuntu/docker_ws
-RUN --mount=type=ssh git clone --recurse-submodules git@github.com:uga-robotics/AutonomousHexacopter.git /home/ubuntu/docker_ws/src/AutonomousHexacopter
+    /tmp/install_deps.sh && \
+    /tmp/rtps_install.sh && \
+    curl -sSL http://get.gazebosim.org | sh && \
+    export DISPLAY=127.0.0.1:0.0 &&\
+    echo "source /opt/ros/foxy/setup.bash" >> /home/ubuntu/.bashrc
 USER ubuntu
 WORKDIR /home/ubuntu
 ENV HOME=/home/ubuntu
-RUN sudo chmod -R 777 /home/ubuntu/docker_ws && \
-    cd /home/ubuntu/docker_ws/src/AutonomousHexacopter/PX4-Autopilot && git checkout uga-dev && \
-    cd ../px4_msgs && git checkout a635d9d827ac36a51411e03b9b8eb25a599dc734 && \
-    cd ../px4_ros_com && git checkout uga-dev && cd ../ && \
-    ./scripts/install_deps.sh && \
-    ./scripts/rtps_install.sh && \
-    curl -sSL http://get.gazebosim.org | sh && \
-    export DISPLAY=127.0.0.1:0.0
 ENV ROSDISTRO=foxy
 ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 CMD ["bash"]
