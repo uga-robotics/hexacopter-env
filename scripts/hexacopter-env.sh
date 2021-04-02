@@ -40,4 +40,6 @@ then
    exit
 fi
 
-docker run -it --rm --network=host -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/.ssh:/home/ubuntu/.ssh -v $path:/home/ubuntu/hexacopter $id bash
+xhost +
+
+docker run -it --rm --privileged --network=host -e DISPLAY=:0 -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/.ssh:/home/ubuntu/.ssh -v $path:/home/ubuntu/hexacopter $id bash
