@@ -23,6 +23,8 @@ When you have the WSL 2 Backend installed correctly, you should then install a L
 In addition to installing and enabling the WSL 2 backend as directed in the Windows installation instructions, you'll also need to enable this functionality in Docker Desktop using this guide on [The Docker Desktop WSL 2 Backend](https://docs.docker.com/docker-for-windows/wsl/#download), Which goes over installation (already covered) and configuration of WSL 2 for use with Docker. The guide has you using the Windows terminal, which can be accessed by opening up PowerShell from the start menu. Make sure to set the default Linux distribution and version in WSL as directed (the name is `Ubuntu-20.04`), and enable the distribution in the Docker Desktop 'WSL Integration' menu in the Resources tab of the settings.
 
 When you have your WSL 2 Linux Distribution setup, launch it for the first time using the start menu (Search 'Ubuntu' and it should come up, you can even pin it to your taskbar) and [do the typical first-time git setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup). Also, [generate and add an ssh key in Linux and add it to your GitHub account](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent), as we'll need to use it shortly.
+
+Finally, you'll need to download and setup [Xming](https://sourceforge.net/projects/xming/files/Xming-mesa/6.9.0.31/Xming-mesa-6-9-0-31-setup.exe/download), a Windows XServer, needed to view Gazebo on Windows through WSL 2. Simply follow the installation instructions as provided in the installer, and make sure to launch Xming whenever you want to use the Docker container.
  
 ### Add SSH Key to SSH Agent
 
