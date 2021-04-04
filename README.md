@@ -74,7 +74,7 @@ Where `devel_ws` is the 'root' directory of the workspace. While in `devel_ws`, 
 
 Next, we'll download the Docker image we need from the [UGA Robotics Docker Hub page](https://hub.docker.com/orgs/ugarobotics). Simply navigate to the `hexacopter-env` repository, go to the `tags` menu, and copy command to the right of the image you would like to use. The command should look something like:
 ```
-docker pull ugarobotics/hexacopter-env:latest
+docker pull ugarobotics/hexacopter-env:TAG
 ```
 
 Let the download finish and you can move to the next step.
