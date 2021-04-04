@@ -42,4 +42,4 @@ fi
 
 xhost +
 
-docker run -it --rm --privileged --network=host -e DISPLAY=:0 -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/.ssh:/home/ubuntu/.ssh -v $path:/home/ubuntu/hexacopter $id bash
+docker run -it --rm --privileged --network=host -e DISPLAY=host.docker.internal:0.0   -e LIBGL_ALWAYS_INDIRECT=0 -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/.ssh:/home/ubuntu/.ssh -v $path:/home/ubuntu/hexacopter $id bash

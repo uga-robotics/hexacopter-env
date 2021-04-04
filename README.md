@@ -24,7 +24,25 @@ In addition to installing and enabling the WSL 2 backend as directed in the Wind
 
 When you have your WSL 2 Linux Distribution setup, launch it for the first time using the start menu (Search 'Ubuntu' and it should come up, you can even pin it to your taskbar) and [do the typical first-time git setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup). Also, [generate and add an ssh key in Linux and add it to your GitHub account](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent), as we'll need to use it shortly.
 
-Finally, you'll need to download and setup [Xming](https://sourceforge.net/projects/xming/files/Xming-mesa/6.9.0.31/Xming-mesa-6-9-0-31-setup.exe/download), a Windows XServer, needed to view Gazebo on Windows through WSL 2. Simply follow the installation instructions as provided in the installer, and make sure to launch Xming whenever you want to use the Docker container.
+After that, in WSL 2, execute the following commands to setup WSL for X11 forwarding:
+```bash
+echo "export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0" >> ~/.bashrc
+echo "export LIBGL_ALWAYS_INDIRECT=0" >> ~/.bashrc
+```
+
+Next, we need to make sure the DNS for WSL is correctly setup, by executing the following commands:
+```bash
+echo "nameserver 8.8.8.8" >> ~/.bashrc
+echo "nameserver 8.8.4.4" >> ~/.bashrc
+```
+
+Finally, you'll need to download and setup [VcXsrv](https://sourceforge.net/projects/vcxsrv/), a Windows XServer, needed to view Gazebo on Windows through WSL 2. Go through the installation instructions to your preferences, and use the `XLaunch` program to configure the Xserver as such:
+
+![xlaunch 1: display number of 0, multiple windows option](resources/xlaunch1.PNG)
+
+![xlaunch 2: start no client](resources/xlaunch2.PNG)
+
+![Xlaunch 3: clipboard, primary selection, no native opengl, disable access control](resources/xlaunch3.PNG)
  
 ### Add SSH Key to SSH Agent
 
