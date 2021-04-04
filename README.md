@@ -30,11 +30,20 @@ echo "export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/
 echo "export LIBGL_ALWAYS_INDIRECT=0" >> ~/.bashrc
 ```
 
-Next, we need to make sure the DNS for WSL is correctly setup, by executing the following command (copy/paste the entire block):
+Next, we need to make sure the DNS for WSL is correctly setup, by executing the following commands in WSL:
 ```bash
-echo '[network]' | sudo tee -a /etc/wsl.conf > /dev/null && \
-echo 'generateResolvConf = false' | sudo tee -a /etc/wsl.conf > /dev/null && \
-echo 'nameserver 8.8.8.8' | sudo tee -a /etc/resolv.conf > /dev/null && \
+echo '[network]' | sudo tee -a /etc/wsl.conf > /dev/null
+echo 'generateResolvConf = false' | sudo tee -a /etc/wsl.conf > /dev/null
+```
+
+Then, close your Ubuntu shell window, and open up PowerShell to execute the following command, and save the changes in `/etc/wsl.conf`:
+```
+wsl --shutdown
+```
+
+Now, open Ubuntu back up, and execute these commands, after which, you should be done setting things up on WSL:
+```bash
+echo 'nameserver 8.8.8.8' | sudo tee -a /etc/resolv.conf > /dev/null
 echo 'nameserver 8.8.4.4' | sudo tee -a /etc/resolv.conf > /dev/null
 ```
 
