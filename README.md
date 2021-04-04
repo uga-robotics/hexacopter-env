@@ -30,10 +30,12 @@ echo "export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/
 echo "export LIBGL_ALWAYS_INDIRECT=0" >> ~/.bashrc
 ```
 
-Next, we need to make sure the DNS for WSL is correctly setup, by executing the following commands:
+Next, we need to make sure the DNS for WSL is correctly setup, by executing the following command (copy/paste the entire block):
 ```bash
-echo "nameserver 8.8.8.8" >> ~/.bashrc
-echo "nameserver 8.8.4.4" >> ~/.bashrc
+echo '[network]' | sudo tee -a /etc/wsl.conf > /dev/null && \
+echo 'generateResolvConf = false' | sudo tee -a /etc/wsl.conf > /dev/null && \
+echo 'nameserver 8.8.8.8' | sudo tee -a /etc/resolv.conf > /dev/null && \
+echo 'nameserver 8.8.4.4' | sudo tee -a /etc/resolv.conf > /dev/null
 ```
 
 Finally, you'll need to download and setup [VcXsrv](https://sourceforge.net/projects/vcxsrv/), a Windows XServer, needed to view Gazebo on Windows through WSL 2. Go through the installation instructions to your preferences, and use the `XLaunch` program to configure the Xserver as such:
