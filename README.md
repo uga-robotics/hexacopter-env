@@ -14,7 +14,7 @@ Follow the instructions for your operating system to install Docker:
 
 Make sure to test your Docker install with the instructions provided.
 
-#### Special Directions for Windows
+### Special Directions for Windows
 
 When installing Docker for Windows, **make sure to install the WSL (Windows Subsystem for Linux) 2 backend as directed**, as we'll need WSL 2 to build/use Linux containers, and use Docker in a preffered, unified way (WSL makes it such that Windows, Linux, and MacOS systems can use the same commands/interface). 
 
@@ -24,27 +24,12 @@ In addition to installing and enabling the WSL 2 backend as directed in the Wind
 
 When you have your WSL 2 Linux Distribution setup, launch it for the first time using the start menu (Search 'Ubuntu' and it should come up, you can even pin it to your taskbar) and [do the typical first-time git setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup). Also, [generate and add an ssh key in Linux and add it to your GitHub account](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent), as we'll need to use it shortly.
 
-After that, in WSL 2, execute the following commands to setup WSL for X11 forwarding:
+After that, in WSL 2, execute the following commands to setup WSL for X11 forwarding and to fix some issues with conflicts between X11 forwarding and SSH:
 ```bash
 echo "export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0" >> ~/.bashrc
 echo "export LIBGL_ALWAYS_INDIRECT=0" >> ~/.bashrc
-```
-
-Next, we need to make sure the DNS for WSL is correctly setup, by executing the following commands in WSL:
-```bash
-echo '[network]' | sudo tee -a /etc/wsl.conf > /dev/null
-echo 'generateResolvConf = false' | sudo tee -a /etc/wsl.conf > /dev/null
-```
-
-Then, close your Ubuntu shell window, and open up PowerShell to execute the following command, and save the changes in `/etc/wsl.conf`:
-```
-wsl --shutdown
-```
-
-Now, open Ubuntu back up, and execute these commands, after which, you should be done setting things up on WSL:
-```bash
-echo 'nameserver 8.8.8.8' | sudo tee -a /etc/resolv.conf > /dev/null
-echo 'nameserver 8.8.4.4' | sudo tee -a /etc/resolv.conf > /dev/null
+echo "echo 'nameserver 8.8.8.8' | sudo tee -a /etc/resolv.conf > /dev/null" >> ~/.bashrc
+echo "echo 'nameserver 8.8.4.4' | sudo tee -a /etc/resolv.conf > /dev/null" >> ~/.bashrc
 ```
 
 Finally, you'll need to download and setup [VcXsrv](https://sourceforge.net/projects/vcxsrv/), a Windows XServer, needed to view Gazebo on Windows through WSL 2. Go through the installation instructions to your preferences, and use the `XLaunch` program to configure the Xserver as such:
@@ -54,6 +39,8 @@ Finally, you'll need to download and setup [VcXsrv](https://sourceforge.net/proj
 ![xlaunch 2: start no client](resources/xlaunch2.PNG)
 
 ![Xlaunch 3: clipboard, primary selection, no native opengl, disable access control](resources/xlaunch3.PNG)
+
+Now you should be good to go for a basic Docker setup on WSL 2 on Windows. If you have an Nvidia GPU in your computer, and you would like to get better performance in Gazebo, you can follow the [steps in this guide](https://docs.microsoft.com/en-us/windows/win32/direct3d12/gpu-cuda-in-wsl) to enable Nvidia GPU support in WSL 2.
  
 ### Add SSH Key to SSH Agent
 
