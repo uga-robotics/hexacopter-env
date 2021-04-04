@@ -40,7 +40,7 @@ Finally, you'll need to download and setup [VcXsrv](https://sourceforge.net/proj
 
 ![Xlaunch 3: clipboard, primary selection, no native opengl, disable access control](resources/xlaunch3.PNG)
 
-Now you should be good to go for a basic Docker setup on WSL 2 on Windows. If you have an Nvidia GPU in your computer, and you would like to get better performance in Gazebo, you can follow the [steps in this guide](https://docs.microsoft.com/en-us/windows/win32/direct3d12/gpu-cuda-in-wsl) to enable Nvidia GPU support in WSL 2.
+Now you should be good to go for a basic Docker setup on WSL 2 on Windows. If you have an Nvidia GPU in your computer, and you would like to get better performance in Gazebo, you can follow the [steps in this guide](https://docs.microsoft.com/en-us/windows/win32/direct3d12/gpu-cuda-in-wsl) to enable Nvidia GPU support in WSL 2. You can use your UGA Mail outlook login to register for the Insider Program.
  
 ### Add SSH Key to SSH Agent
 
