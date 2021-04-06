@@ -79,9 +79,9 @@ docker pull ugarobotics/hexacopter-env:TAG
 
 Let the download finish and you can move to the next step.
 
-Now, navigate back to the `hexacopter-env` repository, and execute the `hexacopter-env.sh` script as such:
+Now, navigate back to the `hexacopter-env` repository, and execute the `launch_wsl.sh` script if you're using WSL on Windows, and execute `launch_unix.sh`if you're using Linux or MacOS natively. You should execute your given script as such:
 ```
-./scripts/hexacopter-env.sh -p /path/to/workspace/root -i <ImageID>
+./scripts/launch_<platform>.sh -p /path/to/workspace/root -i <ImageID>
 ```
 
 Where `/path/to/workspace/root` is the path you copied, and `<ImageID>` is the Docker Hub image you would like to run (the one we pulled earlier!). To see a list of available Docker images, use the `docker images`
@@ -105,9 +105,7 @@ After that is done, you now have the `hexacopter-env` repository on your compute
 docker build .
 ```
 
-After the container finishes building (should take 10-20 minutes depending on your computer), you can run it with the same script as suggested above, `hexacopter-env.sh`, except instead of the Docker Hub namespace for the Image ID, you'll need to execute `docker images`, copy the ID of the image you just built, and use that in its place:
-```
-./scripts/hexacopter-env.sh -p /path/to/ROS2/Workspace -i <ImageID>
+After the container finishes building (should take 10-20 minutes depending on your computer), you can run it with the same script as suggested above.
 ```
 
 ## Final Thoughts
