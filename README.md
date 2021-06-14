@@ -106,7 +106,6 @@ docker build .
 ```
 
 After the container finishes building (should take 10-20 minutes depending on your computer), you can run it with the same script as suggested above.
-```
 
 ## Final Thoughts
 
